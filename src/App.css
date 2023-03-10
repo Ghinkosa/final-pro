@@ -1,15 +1,33 @@
 .admin {
-  background-color: #E1D9D0;
-  width: 100%;
+  background-color: #e1d9d0;
+  width: 86%;
   height: 90vh;
 }
-.mleft-for-dashbord{
-margin-left: 250px;
+.mleft-for-dashbord {
+  margin-top: 10px;
+  margin-left: 250px;
 }
-@media(max-width:576px) {
+@media (max-width: 576px) {
   .mleft-for-dashbord {
+    margin-top: 10px;
     margin-left: 110px;
   }
+}
+.box-sizes {
+  margin-top: 2rem;
+  width: 19rem;
+  height: 14rem;
+
+  margin-left: 3rem;
+}
+.dashboard-color {
+  color: #ec5782;
+}
+.stud-list {
+  width: 70%;
+  height: 55vh;
+  background-color: white;
+  border-radius: 14px;
 }
 .list {
   width: 100%;
@@ -17,7 +35,7 @@ margin-left: 250px;
   border-bottom: 0.1px rgb(148, 150, 131) solid;
 }
 .list:hover {
-  background-color: #FF6B00;
+  background-color: #ff6b00;
   font-size: large;
 }
 .all-list {

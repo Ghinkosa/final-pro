@@ -12,7 +12,9 @@ export default function SideMenu() {
   return (
     <div className="sticky-top position-absolute">
       <div className="container-fluid">
-        <div className="row">
+        <div
+          className="row 
+        ">
           <div className="col-sm-auto min-vh-100 bg-white">
             <div className="list">
               <div className="logo">
@@ -30,71 +32,71 @@ export default function SideMenu() {
                   </div>
                 </div>
                 <div className="d-flex justify-content-center">
-                  <div className="text-secondary d-none d-sm-inline fs-1">Admin</div>
+                  <div className="text-secondary d-none d-sm-inline fs-1">
+                    Admin
+                  </div>
                 </div>
               </div>
             </div>
             <ul className="all-list">
               <li className="list">
                 <a className="nav-link">
-
-                  <span className="ms-1 me-5 d-none d-sm-inline text-dark fs-3 ">
-                    Dashbord
-                  </span>
-                  <i className="m-auto">
+                  <i className="">
                     <FaHome size={30} color="black" />
                   </i>
+                  <span className=" ms-3 d-none d-sm-inline text-dark fs-3 ">
+                    Dashbord
+                  </span>
                 </a>
               </li>
               <li className="list">
                 <a className="nav-link">
-                 
-                  <span className=" me-5 ms-1 d-none d-sm-inline text-dark fs-3">Message</span>
-                  <i className="me-3">
+                  <i className="">
                     <FaRegPaperPlane size={30} color="black" />
                   </i>
+                  <span className="ms-3 d-none d-sm-inline text-dark fs-3">
+                    Message
+                  </span>
                 </a>
               </li>
               <li className="list">
                 <a className="nav-link ">
-                 
-                  <span className="ms-1 me-5 d-none d-sm-inline text-dark fs-3">
-                    Users
-                  </span>
-                  <i className="me-3">
+                  <i className="">
                     <FaUser size={30} color="black" />
                   </i>
+                  <span className="ms-3 d-none d-sm-inline text-dark fs-3">
+                    Users
+                  </span>
                 </a>
               </li>
               <li className="list">
                 <a className="nav-link">
-                  <span className="ms-1 me-5 d-none d-sm-inline text-dark fs-3">
-                    Marks
-                  </span>
-                  <i className="me-3">
+                  <i className="">
                     <FaBook size={30} color="black" />
                   </i>
+                  <span className="ms-3 d-none d-sm-inline text-dark fs-3">
+                    Marks
+                  </span>
                 </a>
               </li>
               <li className="list">
                 <a className="nav-link">
-                  <span className="ms-1 me-5 d-none d-sm-inline text-dark fs-3">
-                    Attendance
-                  </span>
-                  <i className="me-3">
+                  <i className="">
                     <FaRegHandPaper size={30} color="black" />
                   </i>
+                  <span className="ms-3 d-none d-md-inline text-dark fs-3">
+                    Attendance
+                  </span>
                 </a>
               </li>
               <li className="list">
                 <a className="nav-link ">
-
-                  <span className="me-5 ms-1 d-none d-sm-inline text-dark fs-3">
-                    Schedule
-                  </span>
-                  <i className="me-3 ms-4 m-auto d-sm-inline">
+                  <i className="d-sm-inline">
                     <FaRegCalendarAlt size={30} color="black" />
                   </i>
+                  <span className="ms-3 d-none d-sm-inline text-dark fs-3">
+                    Schedule
+                  </span>
                 </a>
               </li>
             </ul>

@@ -6,10 +6,10 @@ import SideMenu from "./component/SideMenu";
 export default function Admin() {
   return (
     <div className="">
+      <NavBar />
       <SideMenu />
-      <NavBar/>
       <div className="admin mleft-for-dashbord">
-        <DashBoard/>
+        <DashBoard />
       </div>
     </div>
   );
