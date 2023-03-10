@@ -30,67 +30,71 @@ export default function SideMenu() {
                   </div>
                 </div>
                 <div className="d-flex justify-content-center">
-                  <div className="text-secondary d-none d-sm-inline">Admin</div>
+                  <div className="text-secondary d-none d-sm-inline fs-1">Admin</div>
                 </div>
               </div>
             </div>
             <ul className="all-list">
               <li className="list">
                 <a className="nav-link">
-                  <i className="me-3">
-                    <FaHome size={30} color="black" />
-                  </i>
-                  <span className=" d-none d-sm-inline text-dark ">
+
+                  <span className="ms-1 me-5 d-none d-sm-inline text-dark fs-3 ">
                     Dashbord
                   </span>
+                  <i className="m-auto">
+                    <FaHome size={30} color="black" />
+                  </i>
                 </a>
               </li>
               <li className="list">
                 <a className="nav-link">
+                 
+                  <span className=" me-5 ms-1 d-none d-sm-inline text-dark fs-3">Message</span>
                   <i className="me-3">
                     <FaRegPaperPlane size={30} color="black" />
                   </i>
-                  <span className=" d-none d-sm-inline text-dark">Message</span>
                 </a>
               </li>
               <li className="list">
                 <a className="nav-link ">
+                 
+                  <span className="ms-1 me-5 d-none d-sm-inline text-dark fs-3">
+                    Users
+                  </span>
                   <i className="me-3">
                     <FaUser size={30} color="black" />
                   </i>
-                  <span className="ms-1 d-none d-sm-inline text-dark">
-                    Users
-                  </span>
                 </a>
               </li>
               <li className="list">
                 <a className="nav-link">
+                  <span className="ms-1 me-5 d-none d-sm-inline text-dark fs-3">
+                    Marks
+                  </span>
                   <i className="me-3">
                     <FaBook size={30} color="black" />
                   </i>
-                  <span className="ms-1 d-none d-sm-inline text-dark">
-                    Marks
-                  </span>
                 </a>
               </li>
               <li className="list">
                 <a className="nav-link">
+                  <span className="ms-1 me-5 d-none d-sm-inline text-dark fs-3">
+                    Attendance
+                  </span>
                   <i className="me-3">
                     <FaRegHandPaper size={30} color="black" />
                   </i>
-                  <span className="ms-1 d-none d-sm-inline text-dark">
-                    Attendance
-                  </span>
                 </a>
               </li>
               <li className="list">
                 <a className="nav-link ">
-                  <i className="me-3">
-                    <FaRegCalendarAlt size={30} color="black" />
-                  </i>
-                  <span className="ms-1 d-none d-sm-inline text-dark">
+
+                  <span className="me-5 ms-1 d-none d-sm-inline text-dark fs-3">
                     Schedule
                   </span>
+                  <i className="me-3 ms-4 m-auto d-sm-inline">
+                    <FaRegCalendarAlt size={30} color="black" />
+                  </i>
                 </a>
               </li>
             </ul>
