@@ -2,6 +2,7 @@ import React from "react";
 import { FaUserGraduate,FaChalkboardTeacher,FaBookReader,FaBookOpen,FaUserTie,FaTrash} from "react-icons/fa";
 import {MdOutlineRestore} from "react-icons/md"
 import { useEffect,useState } from "react";
+import axios from "axios";
 export const DashBoard = () => {
   const [post,setPost]=useState([]);
   const [currentPage, setCurrentPage]=useState(1)
@@ -25,16 +26,26 @@ export const DashBoard = () => {
     }
   useEffect(()=>{
       const getPost=async()=>{
-          const postsFromserv =await fetchPost();
-          setPost(postsFromserv);
+          teacherList();
       };
       getPost();
   },[]);
-  const fetchPost=async()=>{
-      const res=await fetch("https://jsonplaceholder.typicode.com/posts")
-      const data =await res.json()
-      return data;
-  }
+  const teacherList = async () => {
+    let token=localStorage.getItem('token')
+    axios.defaults.withCredentials = true
+    axios.get("http://localhost:8000" + "/sanctum/csrf-cookie").then(
+      (response) => {
+        axios.get("http://localhost:8000/" + "api/teacherList", { headers: {
+           Authorization: 'Bearer ' +token}} )
+          .then(
+            async (response) => {
+             setPost(response.data.user);
+            },(error)=>{
+                console.log(error)
+            }
+          )
+      })
+        }
   const lastPost=currentPage*postPage
   const firstPost=lastPost-postPage
   const currenPosts=post.slice(firstPost ,lastPost)
@@ -90,29 +101,27 @@ export const DashBoard = () => {
       <div className="ms-5 mt-5 stud-list">
         <div className="p-4 fs-4 text-dark ">Student List</div>
         <div>
-        <table class="table">
+        <table className="table">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">name</th>
-      <th scope="col">Gender</th>
+      <th scope="col">user_id</th>
       <th scope="col">phone</th>
-      <th scope="col">DOB</th>
+      <th scope="col">email</th>
       <th scope="col">photo</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   
-
-  
   <tbody>
 { currenPosts.map((post)=>(
       <tr key={post.id}>
       <th scope="row">{post.id}</th>
-      <td>Mark Otto</td>
-      <td>M</td>
-      <td>0945235563</td>
-      <td>july 30 2000</td>
+      <td>{post.name}</td>
+      <td>{post.user_id}</td>
+      <td>{post.phone}</td>
+      <td>{post.email}</td>
       <td><FaUserTie size={40} color="#ec5782"/></td>
       <td><FaTrash size={25} color="red"/><MdOutlineRestore size={30} color="#20D7D7" className="ms-3"/></td>
     </tr>
@@ -123,7 +132,8 @@ export const DashBoard = () => {
 </tbody>
 </table>
         </div>
-        <ul className='mx-auto pagination px-auto'>
+        <div className="mx-auto">
+        <ul className='pagination'>
         <a onClick={()=>previes()}href='#' className='page-link'>Prev</a>
         {pages.map((page)=>(
             <li key={page} className="page-item">
@@ -132,6 +142,8 @@ export const DashBoard = () => {
         ))}
         <a onClick={()=>nextPage()} href='#' className='page-link'>Next</a>
         </ul>
+        </div>
+    
       </div>
     </div>
   );

@@ -1,10 +1,19 @@
 import Admin from "./admin/Admin";
 import "./App.css";
+import Login from "./Login";
+import {Routes, Route,useNavigate} from "react-router-dom";
+import NotFound from "./NotFound";
+import { useEffect } from "react";
 
 function App() {
   return (
     <div className="app-color">
-      <Admin />
+      <Routes>
+         <Route path="/" element={<Login />}/>
+         <Route path="/dashboard" element={<Admin />}/>
+         <Route path="*" element={< NotFound/>}/>
+      </Routes>
+      
     </div>
   );
 }
