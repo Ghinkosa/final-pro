@@ -4,6 +4,7 @@ import Login from "./Login";
 import {Routes, Route,useNavigate} from "react-router-dom";
 import NotFound from "./NotFound";
 import { useEffect } from "react";
+import Students from "./admin/Students";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
          <Route path="/" element={<Login />}/>
          <Route path="/dashboard" element={<Admin />}/>
+         <Route path="/das" element={<Students />}/>
          <Route path="*" element={< NotFound/>}/>
       </Routes>
       

@@ -10,7 +10,7 @@ import { FaUser } from "react-icons/fa";
 export default function NavBar() {
   return (
     <div className="">
-      <Navbar key="md" bg="white" expand="md" className="mb-3">
+      <Navbar key="md"  expand="md" className="mb-3 col">
         <Container fluid>
           <Navbar.Brand href="#"></Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-md`} />

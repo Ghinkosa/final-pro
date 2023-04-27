@@ -1,13 +1,18 @@
+
 import React from "react";
 import { FaUserGraduate,FaChalkboardTeacher,FaBookReader,FaBookOpen,FaUserTie,FaTrash} from "react-icons/fa";
 import {MdOutlineRestore} from "react-icons/md"
 import { useEffect,useState } from "react";
-import axios from "axios";
+import axios, { toFormData } from "axios";
 export const DashBoard = () => {
   const [post,setPost]=useState([]);
   const [currentPage, setCurrentPage]=useState(1)
   const [postPage]=useState(6)
+  const [loading,setLoading]=useState(true)
+  const [form_id,setForm_id]=useState(-1)
   const pages=[];
+
+  //for pagination
   for(let i=1;i<= Math.ceil(post.length/postPage);i++){
       pages.push(i)
   }
@@ -24,12 +29,20 @@ export const DashBoard = () => {
           setCurrentPage(currentPage+1);
       }
     }
+    const lastPost=currentPage*postPage
+    const firstPost=lastPost-postPage
+    const currenPosts=post.slice(firstPost ,lastPost)
+    
+//on load data fetching
   useEffect(()=>{
       const getPost=async()=>{
           teacherList();
+          setLoading(false)
       };
       getPost();
   },[]);
+
+  //fetch data of teacher list from backend
   const teacherList = async () => {
     let token=localStorage.getItem('token')
     axios.defaults.withCredentials = true
@@ -46,12 +59,27 @@ export const DashBoard = () => {
           )
       })
         }
-  const lastPost=currentPage*postPage
-  const firstPost=lastPost-postPage
-  const currenPosts=post.slice(firstPost ,lastPost)
+  /*used to hundle form input*/
+  function hundleName(e,id){
+
+    const newUser=post.map(li=>(
+      li.id===id ?{...li,[e.target.name]:e.target.value}:li
+    )
+      )
+      setPost(newUser)
+  }
+  function makeUpdate(us_id){
+  }
+  //used to indicate the form to be updated
+  function toForms(users_id){
+    setForm_id(users_id);
+  }
+
   return (
     <div className="mt-4">
       <div className="fs-2 ms-2 text-white ">DashBoard</div>
+      {loading ?<>loading......</>:
+      <div>
       <div className="d-flex flex-wrap">
         <div className="card box-sizes d-flex flex-row">
           <div className="my-auto ps-4">
@@ -98,13 +126,14 @@ export const DashBoard = () => {
           </div>
         </div>
       </div>
+
       <div className="ms-5 mt-5 stud-list">
         <div className="p-4 fs-4 text-dark ">Student List</div>
         <div>
         <table className="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">id</th>
       <th scope="col">name</th>
       <th scope="col">user_id</th>
       <th scope="col">phone</th>
@@ -114,22 +143,41 @@ export const DashBoard = () => {
     </tr>
   </thead>
   
-  <tbody>
+  <tbody className="table">
+    
 { currenPosts.map((post)=>(
-      <tr key={post.id}>
+  form_id===post.id ? 
+    <tr key={post.id}>
+       <th>{post.id}</th>
+       <td><input type="text" name="name" value={post.name} className="no-border" onChange={(e)=>hundleName(e,post.id)}/></td>
+       <td>{post.user_id}</td>
+       <td><input type="text" name="phone" value={post.phone} className="no-border" onChange={(e)=>hundleName(e,post.id)}/></td>
+       <td><input type="text" name="email" value={post.email} className="no-border" onChange={(e)=>hundleName(e,post.id)}/></td>
+       <td><input type="file" className="no-border"/></td>
+      <td><FaTrash size={50} color="red"/><MdOutlineRestore size={60} color="#20D7D7" className="ms-3" onClick={()=>makeUpdate(post.id)}/></td>
+    </tr>
+ :
+      <tr key={post.id} onClick={()=>{
+        toForms(post.id)
+        }
+      }>
       <th scope="row">{post.id}</th>
-      <td>{post.name}</td>
-      <td>{post.user_id}</td>
+      <td>
+      <input type="text" className="no-border" value={post.name} onChange={(e)=>setPost(e.target.value)}></input>
+      </td>
+      <td>
+      {post.user_id}
+      </td>
       <td>{post.phone}</td>
       <td>{post.email}</td>
       <td><FaUserTie size={40} color="#ec5782"/></td>
       <td><FaTrash size={25} color="red"/><MdOutlineRestore size={30} color="#20D7D7" className="ms-3"/></td>
-    </tr>
-
+      </tr>
 ))
 }
 
 </tbody>
+      
 </table>
         </div>
         <div className="mx-auto">
@@ -146,5 +194,8 @@ export const DashBoard = () => {
     
       </div>
     </div>
+}
+    </div>
+        
   );
 };
