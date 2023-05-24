@@ -10,7 +10,7 @@ import { FaUser } from "react-icons/fa";
 export default function NavBar() {
   return (
     <div className="">
-      <Navbar key="md"  expand="md" className="mb-3 col">
+      <Navbar key="md" expand="md" className="py-2col bg-success">
         <Container fluid>
           <Navbar.Brand href="#"></Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-md`} />
@@ -32,7 +32,7 @@ export default function NavBar() {
                     className="me-2"
                     aria-label="Search"
                   />
-                  <Button variant="outline-success">Search</Button>
+                  <Button variant="outline-light">Search</Button>
                 </Form>
                 <NavDropdown
                   title="Admin"

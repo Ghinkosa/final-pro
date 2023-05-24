@@ -1,11 +1,11 @@
 import React from "react";
-import { DashBoard } from "./component/DashBoard";
-import NavBar from "./component/NavBar";
-import SideMenu from "./component/SideMenu";
+import NavBar from "./NavBar";
+import SideMenu from "./SideMenu";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AddTeacher from "./AddTeacher";
 
-export default function Admin() {
+export default function Admin({}) {
   let history = useNavigate();
   /*useEffect(()=>{
     if(!(localStorage.getItem('user_id'))){
@@ -15,11 +15,11 @@ export default function Admin() {
   return (
     <div className="">
       <NavBar />
-      <SideMenu active="1" />
+      <SideMenu active="2" />
       <div
         className="admin mleft-for-dashbord cardsContainer"
         id="cards-container">
-        <DashBoard />
+        <AddTeacher />
       </div>
     </div>
   );
