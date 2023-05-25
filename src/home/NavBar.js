@@ -6,7 +6,7 @@ export default function ({ modelfunction }) {
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <Link className="navbar-brand ms-5 fw-bold" to="#home">
+          <Link className="navbar-brand ms-5 fw-bold" to="/">
             <img src={photo} alt="no image" className="logo-3"></img>
             SAFA
           </Link>
@@ -25,10 +25,7 @@ export default function ({ modelfunction }) {
             id="navbarSupportedContent">
             <ul className="navbar-nav mx-auto mb-lg-0">
               <li className="nav-item me-4">
-                <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="#home">
+                <Link className="nav-link active" aria-current="page" to="/">
                   Home
                 </Link>
               </li>

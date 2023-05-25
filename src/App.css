@@ -243,8 +243,9 @@ img.avatar {
   width: 600px;
 }
 .register-form {
-  margin: 5% 10% 5% 10%;
-  background-color: #294bf9;
+  margin: 0% 10% 0% 10%;
+  width: 100%;
+  height: 140vh;
 }
 @media screen and (max-width: 1200px) {
   .imgcontainer {
