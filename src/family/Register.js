@@ -60,16 +60,14 @@ export default function Register() {
     return allErrors;
   }
   return (
-    <div
-      className="
-    ">
+    <div className="">
       <NavBar modelfunction={modelfunction}></NavBar>
       <div className="register-form  mx-auto bg-primary pt-5 pb-5">
         <form
           className=" ps-5 mx-auto rounded  py-2 w-75 bg-white"
           onSubmit={addUser}>
           <div className="fs-3 mb-3">
-            <strong className="border-bottom border-primary">Family </strong>
+            <strong className=" text-primary">Family </strong>
             Registration
           </div>
           <div className="fs-5 mb-3">Personal Details</div>

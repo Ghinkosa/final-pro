@@ -16,7 +16,7 @@ export default function PrintPass() {
   });
   return (
     <>
-      <div className="container w-50 bg-secondary" ref={componentRef}>
+      <div className="container w-50 bg-secondary mt-5" ref={componentRef}>
         <div className="logo text-center">
           <img src={photo} alt="no image" className="logo-3 mx-auto my-2"></img>
         </div>
@@ -50,7 +50,7 @@ export default function PrintPass() {
           </tbody>
         </table>
       </div>
-      <button className="btn btn-success" onClick={handlePrint}>
+      <button className="btn btn-primary mx-5" onClick={handlePrint}>
         Print File
       </button>
     </>

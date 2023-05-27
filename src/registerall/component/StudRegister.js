@@ -3,7 +3,7 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { useNavigate } from "react-router-dom";
 
-export default function AddTeacher() {
+export default function StudRegister() {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
@@ -13,14 +13,14 @@ export default function AddTeacher() {
   const [address, setAddress] = useState("");
   const [sex, setSex] = useState("male");
   const [photo, setPhoto] = useState("");
-  const [education, setEducation] = useState("");
+  const [session, setSession] = useState("Class");
+  const [age, setAge] = useState("");
   const [errors, setErrors] = useState({});
   const allErrors = {};
   let history = useNavigate();
   const addUser = (e) => {
     e.preventDefault();
     setErrors(validateInput());
-    history("/print");
   };
   function validateInput() {
     if (fname === "") {
@@ -47,13 +47,22 @@ export default function AddTeacher() {
     if (address === "") {
       allErrors.address = "address field is important";
     }
+    if (age === "") {
+      allErrors.age = "age field is important";
+    }
+    if (session === "Class") {
+      allErrors.session = "please select this field";
+    }
+    if (photo === "") {
+      allErrors.photo = "Photo field is important";
+    }
     return allErrors;
   }
   return (
     <div>
-      <form className="bg-light mt-3 ps-4 mx-4 pb-2" onSubmit={addUser}>
+      <form className="bg-light mt-3 ps-4 mx-4 pb-2 rounded" onSubmit={addUser}>
         <div className="fs-3 mb-3">
-          <strong className="border-bottom border-primary"> Add</strong> Teacher
+          <strong className="border-bottom border-primary"> Add</strong> Student
         </div>
         <div className="fs-5 mb-3">Personal Details</div>
         <div className="d-flex flex-wrap">
@@ -168,36 +177,55 @@ export default function AddTeacher() {
         </div>
         <div className="fs-5 mb-3">Other information</div>
         <div className="d-flex flex-wrap">
-          <div className="mb-3 me-5">
+          <div className="mb-3 me-5 col-3">
             <label className="form-label"></label>
             <select
               className="w-100 form-select"
-              value={education}
+              value={session}
               placeholder=""
-              onChange={(e) => setEducation(e.target.value)}>
-              <option>select education level</option>
-              <option>Degree</option>
-              <option>MS</option>
-              <option>PHD</option>
+              onChange={(e) => setSession(e.target.value)}>
+              <option>Class</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+              <option>11</option>
+              <option>12</option>
             </select>
+            {errors.session && (
+              <div className="text-danger">{errors.session}</div>
+            )}
           </div>
           <div className="mb-3 me-5">
-            <label className="form-label">Middle Name</label>
+            <label className="form-label">Age</label>
             <input
-              type="text"
+              type="number"
+              min="1"
               className="form-control"
-              placeholder="Middle Name"></input>
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              placeholder="Your Age"></input>
+            {errors.age && <div className="text-danger">{errors.age}</div>}
           </div>
           <div className="mb-3 me-5">
             <label className="form-label">Photo</label>
             <input
               type="file"
               className="form-control"
-              placeholder="Last Name"></input>
+              value={photo}
+              onChange={(e) => setPhoto(e.target.value)}
+              placeholder="photo"></input>
+            {errors.photo && <div className="text-danger">{errors.photo}</div>}
           </div>
         </div>
         <button className="btn btn-primary px-5 my-3" type="submit">
-          Save
+          Register
         </button>
       </form>
     </div>

@@ -11,6 +11,10 @@ import ManageSections from "./admin/component/ManageSections";
 import Attendances from "./admin/component/Attendances";
 import Home from "./home/Home";
 import Register from "./family/Register";
+import Registerall from "./registerall/Registerall";
+import AddStudent from "./registerall/AddStudent";
+import Announcement from "./registerall/Announcement";
+import Comment from "./registerall/Comment";
 
 function App() {
   return (
@@ -28,6 +32,14 @@ function App() {
         <Route path="/manage_section" element={<ManageSections />} />
         <Route path="/attendance" element={<Attendances />} />
         <Route path="/print" element={<PrintPass />}></Route>
+        {
+          //Register Route
+        }
+        <Route path="/registerall" element={<Registerall />}></Route>
+        <Route path="/add_Student" element={<AddStudent />}></Route>
+        <Route path="/announcement" element={<Announcement />}></Route>
+        <Route path="/comment" element={<Comment />}></Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
