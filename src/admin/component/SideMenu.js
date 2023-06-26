@@ -46,7 +46,7 @@ export default function SideMenu(data) {
                 <li className="list Actives">
                   <Link to="/dashboard" className="nav-link">
                     <i className="pb-2">
-                      <FaHome size={30} color="#ff6b00" />
+                      <FaHome size={20} color="#ff6b00" />
                     </i>
                     <span className=" ms-3 d-none d-sm-inline">Dashbord</span>
                   </Link>
@@ -55,7 +55,7 @@ export default function SideMenu(data) {
                 <li className="list" onClick={() => activator(1)}>
                   <Link to="/dashboard" className="nav-link">
                     <i className="">
-                      <FaHome size={30} color="white" />
+                      <FaHome size={20} color="white" />
                     </i>
                     <span className=" ms-3 d-none d-sm-inline text-light">
                       Dashbord
@@ -67,7 +67,7 @@ export default function SideMenu(data) {
                 <li className="list  Actives">
                   <Link to="/add_Teacher" className="nav-link">
                     <i className="">
-                      <FaRegPaperPlane size={30} color="#ff6b00" />
+                      <FaRegPaperPlane size={20} color="#ff6b00" />
                     </i>
                     <span className="ms-3 d-none d-sm-inline ">
                       Add Teacher
@@ -82,7 +82,7 @@ export default function SideMenu(data) {
                   }}>
                   <Link to="/add_Teacher" className="nav-link">
                     <i className="">
-                      <FaRegPaperPlane size={30} color="white" />
+                      <FaRegPaperPlane size={20} color="white" />
                     </i>
                     <span className="ms-3 d-none d-sm-inline text-light">
                       Add Teacher
@@ -94,10 +94,10 @@ export default function SideMenu(data) {
                 <li className="list Actives">
                   <Link to="/manage_class" className="nav-link">
                     <i className="">
-                      <FaBook size={30} color="#ff6b00" />
+                      <FaBook size={20} color="#ff6b00" />
                     </i>
                     <span className="ms-3 d-none d-sm-inline">
-                      Manage Classess
+                      Manage Sections
                     </span>
                   </Link>
                 </li>
@@ -105,10 +105,10 @@ export default function SideMenu(data) {
                 <li className="list" onClick={() => activator(3)}>
                   <Link to="/manage_class" className="nav-link">
                     <i className="">
-                      <FaBook size={30} color="white" />
+                      <FaBook size={20} color="white" />
                     </i>
                     <span className="ms-3 d-none d-sm-inline text-light">
-                      Manage Classess
+                      Manage Section
                     </span>
                   </Link>
                 </li>
@@ -117,19 +117,19 @@ export default function SideMenu(data) {
                 <li className="list Actives">
                   <Link to="/manage_section" className="nav-link ">
                     <i className="">
-                      <FaUser size={30} color="#ff6b00" />
+                      <FaUser size={20} color="#ff6b00" />
                     </i>
-                    <span className="ms-3 d-none d-sm-inline">Class</span>
+                    <span className="ms-3 d-none d-sm-inline">Student</span>
                   </Link>
                 </li>
               ) : (
                 <li className="list" onClick={() => activator(4)}>
                   <Link to="/manage_section" className="nav-link ">
                     <i className="">
-                      <FaUser size={30} color="white" />
+                      <FaUser size={20} color="white" />
                     </i>
                     <span className="ms-3 d-none d-sm-inline text-light">
-                      Class
+                      Students
                     </span>
                   </Link>
                 </li>
@@ -138,7 +138,7 @@ export default function SideMenu(data) {
                 <li className="list Actives">
                   <Link to="/attendance" className="nav-link">
                     <i className="">
-                      <FaRegHandPaper size={30} color="#ff6b00" />
+                      <FaRegHandPaper size={20} color="#ff6b00" />
                     </i>
                     <span className="ms-3 d-none d-sm-inline">Attendance</span>
                   </Link>
@@ -147,7 +147,7 @@ export default function SideMenu(data) {
                 <li className="list" onClick={() => activator(5)}>
                   <Link to="/attendance" className="nav-link">
                     <i className="">
-                      <FaRegHandPaper size={30} color="white" />
+                      <FaRegHandPaper size={20} color="white" />
                     </i>
                     <span className="ms-3 d-none d-sm-inline  text-light ">
                       Attendance
@@ -157,23 +157,23 @@ export default function SideMenu(data) {
               )}
               {active == 6 ? (
                 <li className="list Actives">
-                  <a className="nav-link ">
+                  <Link to="/subject" className="nav-link ">
                     <i className="d-sm-inline">
-                      <FaRegCalendarAlt size={30} color="#ff6b00" />
+                      <FaRegCalendarAlt size={20} color="#ff6b00" />
                     </i>
-                    <span className="ms-3 d-none d-sm-inline">Schedule</span>
-                  </a>
+                    <span className="ms-3 d-none d-sm-inline">Subject</span>
+                  </Link>
                 </li>
               ) : (
                 <li className="list" onClick={() => activator(6)}>
-                  <a className="nav-link ">
+                  <Link to="/subject" className="nav-link ">
                     <i className="d-sm-inline">
-                      <FaRegCalendarAlt size={30} color="white" />
+                      <FaRegCalendarAlt size={20} color="white" />
                     </i>
                     <span className="ms-3 d-none d-sm-inline text-light ">
-                      Schedule
+                      Subject
                     </span>
-                  </a>
+                  </Link>
                 </li>
               )}
             </ul>

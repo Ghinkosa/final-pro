@@ -1,8 +1,124 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaTrash, FaPen } from "react-icons/fa";
-
+import { FaTrash, FaPen, FaUser } from "react-icons/fa";
+import axios from "axios";
 export const ManageSection = () => {
+  const [attendance, setAttendance] = useState();
+  const [section_id, setSection_id] = useState();
+  const [class_id, setClass_id] = useState();
+  const [section_name, setSection_name] = useState(4);
+  const [class_name, setClass_name] = useState(2);
+  const [allClasses, setAllClassess] = useState([]);
+  const [allSections, setAllSection] = useState([]);
+  const [allStud, setAllStud] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [class1, setClass1] = useState("Select class (session year)");
+  const [section1, setSection1] = useState("Select Section");
+  const [notSelectedClass, setNotSelectedClass] = useState(true);
+  const [notselected, setNotSelected] = useState(
+    "*class or Session Year is not selected"
+  );
+
+  useEffect(() => {
+    const getClass = async () => {
+      allClass();
+    };
+    getClass();
+  }, []);
+
+  const allClass = (e) => {
+    let token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("class_id", class_id);
+    axios.defaults.withCredentials = true;
+    // CSRF COOKIE
+    axios
+      .get("http://localhost:8000" + "/sanctum/csrf-cookie")
+      .then((response) => {
+        //console.log(response);
+        // LOGIN
+        axios
+          .post("http://localhost:8000/" + "api/viewClass", formData, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then(
+            (response) => {
+              console.log(response);
+              setAllClassess(response.data);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      });
+  };
+  const allSection = (e) => {
+    let token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("class_id", class_id);
+    axios.defaults.withCredentials = true;
+    // CSRF COOKIE
+    axios
+      .get("http://localhost:8000" + "/sanctum/csrf-cookie")
+      .then((response) => {
+        //console.log(response);
+        // LOGIN
+        axios
+          .post("http://localhost:8000/" + "api/viewSection", formData, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then(
+            (response) => {
+              console.log(response);
+              setAllSection(response.data);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      });
+  };
+
+  const allStuds = (e) => {
+    let token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("section_id", section_id);
+    axios.defaults.withCredentials = true;
+    // CSRF COOKIE
+    axios
+      .get("http://localhost:8000" + "/sanctum/csrf-cookie")
+      .then((response) => {
+        //console.log(response);
+        // LOGIN
+        axios
+          .post("http://localhost:8000/" + "api/studSection", formData, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then(
+            (response) => {
+              console.log(response);
+              setAllStud(response.data);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      });
+  };
+  const selectClass = (class_id, className) => {
+    setClass1(className);
+    setClass_id(class_id);
+    setClass_name(className);
+    allSection();
+    setNotSelectedClass(false);
+  };
+
   const [student, setStudent] = useState([
     {
       id: "USER -12133",
@@ -13,91 +129,11 @@ export const ManageSection = () => {
       phone: "096420980",
       photo: "ee",
     },
-    {
-      id: "USER -12133",
-      name: "galata",
-      emial: "galata1713@gmail.com",
-      class: "2012",
-      section: "A",
-      phone: "096420980",
-      photo: "ee",
-    },
-    {
-      id: "USER -12133",
-      name: "galata",
-      emial: "galata1713@gmail.com",
-      class: "2012",
-      section: "A",
-      phone: "096420980",
-      photo: "ee",
-    },
-    {
-      id: "USER -12133",
-      name: "galata",
-      emial: "galata1713@gmail.com",
-      class: "2012",
-      section: "A",
-      phone: "096420980",
-      photo: "ee",
-    },
-    {
-      id: "USER -12133",
-      name: "galata",
-      emial: "galata1713@gmail.com",
-      class: "2012",
-      section: "A",
-      phone: "096420980",
-      photo: "ee",
-    },
-    {
-      id: "USER -12133",
-      name: "galata",
-      emial: "galata1713@gmail.com",
-      class: "2012",
-      section: "A",
-      phone: "096420980",
-      photo: "ee",
-    },
-    {
-      id: "USER -12133",
-      name: "galata",
-      emial: "galata1713@gmail.com",
-      class: "2012",
-      section: "A",
-      phone: "096420980",
-      photo: "ee",
-    },
-    {
-      id: "USER -12133",
-      name: "galata",
-      emial: "galata1713@gmail.com",
-      class: "2012",
-      section: "A",
-      phone: "096420980",
-      photo: "ee",
-    },
-    {
-      id: "USER -12133",
-      name: "galata",
-      emial: "galata1713@gmail.com",
-      class: "2012",
-      section: "A",
-      phone: "096420980",
-      photo: "ee",
-    },
   ]);
-  const [class1, setClass1] = useState("Select class (session year)");
-  const [section1, setSection1] = useState("Select Section");
-  const [notSelectedClass, setNotSelectedClass] = useState(true);
-  const [notselected, setNotSelected] = useState(
-    "*class or Session Yera is not selected"
-  );
-  const selectClass = (year) => {
-    setClass1(year);
-    setNotSelectedClass(false);
-  };
-  const selectSection = (year) => {
-    setSection1(year);
+  const selectSection = (name, id) => {
+    setSection1(name);
+    setSection_id(id);
+    allStuds(id);
   };
 
   const notSelectTheClass = () => {
@@ -108,75 +144,56 @@ export const ManageSection = () => {
   return (
     <div className="mx-4">
       <div className="mt-4">Manage Section {class1}</div>
-      <div className="dropdown mb-2">
-        <button
-          className="btn btn-light border border-primary w-100 dropdown-toggle"
-          id="dropdownMenuButton1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false">
-          {class1}
-        </button>
-        <ul
-          className="dropdown-menu w-100"
-          aria-labelledby="dropdownMenuButton1">
-          <li>
-            <div
-              className="dropdown_item border-bottom p-1 hover-drop-down"
-              onClick={() => selectClass("2022")}>
-              2022
-            </div>
-          </li>
-          <li>
-            <div
-              className="dropdown_item border-bottom p-1 hover-drop-down"
-              onClick={() => selectClass("2024")}>
-              2024
-            </div>
-          </li>
-          <li>
-            <div
-              className="dropdown_item border-bottom p-1 hover-drop-down"
-              onClick={() => selectClass("2023")}>
-              2023
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div className="dropdown">
-        <button
-          className="btn btn-light border border-primary w-100 dropdown-toggle"
-          id="dropdownMenuButton1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          onClick={notSelectTheClass}
-          disabled={notSelectedClass}>
-          {section1}
-        </button>
-        <ul
-          className="dropdown-menu w-100"
-          aria-labelledby="dropdownMenuButton1">
-          <li>
-            <div
-              className="dropdown_item border-bottom p-1 hover-drop-down"
-              onClick={() => selectSection("A")}>
-              A
-            </div>
-          </li>
-          <li>
-            <div
-              className="dropdown_item border-bottom p-1 hover-drop-down"
-              onClick={() => selectSection("B")}>
-              B
-            </div>
-          </li>
-          <li>
-            <div
-              className="dropdown_item border-bottom p-1 hover-drop-down"
-              onClick={() => selectSection("C")}>
-              C
-            </div>
-          </li>
-        </ul>
+      <div className="d-flex my-3">
+        <div className="dropdown ms-3 w-25 me-5">
+          <button
+            className="btn btn-light border border-primary w-100 dropdown-toggle"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            {class1}
+          </button>
+          <ul
+            className="dropdown-menu w-100"
+            aria-labelledby="dropdownMenuButton1">
+            {allClasses.map((classes) => (
+              <li key={classes.id}>
+                <div
+                  className="dropdown_item border-bottom p-1 hover-drop-down"
+                  onClick={() => selectClass(classes.id, classes.className)}>
+                  {classes.className}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="dropdown w-25">
+          <button
+            className="btn btn-light border border-primary w-100 dropdown-toggle"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            onClick={notSelectTheClass}
+            disabled={notSelectedClass}>
+            {section1}
+          </button>
+          <ul
+            className="dropdown-menu w-100"
+            aria-labelledby="dropdownMenuButton1">
+            {allSections.map((section) => (
+              <li key={section.id}>
+                <div
+                  className="dropdown_item border-bottom p-1 hover-drop-down"
+                  onClick={() =>
+                    selectSection(section.section_name, section.id)
+                  }>
+                  {section.section_name}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       {notSelectedClass ? (
         <div className="text-danger">{notselected}</div>
@@ -195,15 +212,17 @@ export const ManageSection = () => {
           </tr>
         </thead>
         <tbody>
-          {student.map((list) => (
+          {allStud.map((list) => (
             <tr key={list.id}>
               <td>{list.id}</td>
               <td>{list.name}</td>
               <td>{list.emial}</td>
-              <td>{list.class}</td>
-              <td>{list.section}</td>
+              <td>{class_name}</td>
+              <td>{section1}</td>
               <td>{list.phone}</td>
-              <td>{list.photo}</td>
+              <td>
+                <FaUser></FaUser>
+              </td>
               <td>
                 <button className="btn btn-danger btn-sm me-2">
                   {" "}

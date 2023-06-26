@@ -1,11 +1,24 @@
 import React from "react";
 import NavBar from "./NavBar";
 import SideMenu from "./SideMenu";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import ManageClass from "./ManageClass";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export const ManageClasses = () => {
+  let history = useNavigate();
+  const auth = () => {
+    if (localStorage.getItem("role") != "admin") {
+      history("/anAuthenticated");
+    }
+  };
+
+  useEffect(() => {
+    const getPost = async () => {
+      auth();
+    };
+    getPost();
+  }, []);
   return (
     <div className="">
       <NavBar />

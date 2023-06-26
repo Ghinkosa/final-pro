@@ -7,11 +7,12 @@ function Login({ modelfunction }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   let history = useNavigate();
+  /*
   useEffect(() => {
     if (localStorage.getItem("user_id")) {
-      history("/dashboard");
+      history("/registerall");
     }
-  }, []);
+  }, []);*/
   /*async function loginTo(event){
         event.preventDefault();
         let item={user_id,password}
@@ -52,7 +53,16 @@ function Login({ modelfunction }) {
                 localStorage.setItem("user_id", response.data.user.user_id);
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("role", response.data.user.role);
-                history("/dashboard");
+                console.log(response.data.user);
+                if (response.data.user.role === "register") {
+                  history("/registerall");
+                } else if (response.data.user.role === "admin") {
+                  history("/dashboard");
+                } else if (response.data.user.role === "teacher") {
+                  history("/teacher");
+                } else if (response.data.user.role === "family") {
+                  history("/family");
+                }
               } else {
                 setError("incorrect user_id or password");
               }
@@ -95,6 +105,7 @@ function Login({ modelfunction }) {
               password
             </label>
             <input
+              type="password"
               className="form-control"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

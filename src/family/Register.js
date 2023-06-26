@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import photo from "./image/family1.jpg";
+import axios from "axios";
 import NavBar from "../home/NavBar";
+import { ToastContainer, toast } from "react-toastify";
 export default function Register() {
+  let history = useNavigate();
   const [model, setModel] = useState(false);
   const [fname, setFname] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +28,7 @@ export default function Register() {
   const addUser = (e) => {
     e.preventDefault();
     setErrors(validateInput());
+    Register();
   };
   function validateInput() {
     if (fname === "") {
@@ -59,8 +63,68 @@ export default function Register() {
     }
     return allErrors;
   }
+
+  const Register = (event) => {
+    let token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("name", fname);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("password_confirmation", confirmPassword);
+    formData.append("address", address);
+    formData.append("role", "family");
+    formData.append("status", "active");
+    formData.append("stud_id", studId);
+    formData.append("phone", phone);
+    formData.append("ref_key", confirmCode);
+
+    axios.defaults.withCredentials = true;
+    // CSRF COOKIE
+    axios
+      .get("http://localhost:8000" + "/sanctum/csrf-cookie")
+      .then((response) => {
+        //console.log(response);
+        // LOGIN
+        axios
+          .post("http://localhost:8000/" + "api/register", formData, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then(
+            (response) => {
+              console.log(response.data);
+              if (response.data.message) {
+                toast(response.data.message);
+              } else {
+                console.log(response.data);
+                localStorage.setItem("id", response.data.user.user_id);
+                localStorage.setItem("password", password);
+                localStorage.setItem("name", fname);
+                history("/printFamily");
+              }
+            },
+            (error) => {
+              console.log(error);
+            }
+            /* => {
+              console.log(response);
+              if (response.data.message) {
+                return response.data.info;
+              } else {
+                console.log("not saved");
+              }
+              // GET USER
+              // GET USER ERROR
+              // LOGIN ERROR
+            },*/
+          );
+      });
+  };
+
   return (
     <div className="">
+      <ToastContainer />
       <NavBar modelfunction={modelfunction}></NavBar>
       <div className="register-form  mx-auto bg-primary pt-5 pb-5">
         <form

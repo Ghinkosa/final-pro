@@ -15,6 +15,20 @@ import Registerall from "./registerall/Registerall";
 import AddStudent from "./registerall/AddStudent";
 import Announcement from "./registerall/Announcement";
 import Comment from "./registerall/Comment";
+import Subjects from "./admin/component/Subjects";
+import Teacher from "./teacher/Teacher";
+import Grade from "./teacher/component/Grade";
+import TeacherAttendance from "./teacher/component/TeacherAttendance";
+import CreateAssessment from "./teacher/component/CreateAssessment";
+import Complian from "./teacher/component/Complian";
+import DetialAttendance from "./admin/component/DetialAttendance";
+import AttendDetial from "./teacher/component/AttendDetial";
+import Family from "./family/Family";
+import PrintStud from "./registerall/component/PrintStud";
+import Auth from "./Auth";
+import PrintFam from "./family/printFam";
+import Assessment from "./family/component/Assessment";
+import AssessPage from "./family/AssessPage";
 
 function App() {
   return (
@@ -31,7 +45,10 @@ function App() {
         <Route path="/manage_class" element={<ManageClasses />} />
         <Route path="/manage_section" element={<ManageSections />} />
         <Route path="/attendance" element={<Attendances />} />
+        <Route path="/subject" element={<Subjects />} />
         <Route path="/print" element={<PrintPass />}></Route>
+        <Route path="/detial" element={<DetialAttendance />}></Route>
+        <Route path="/anAuthenticated" element={<Auth />}></Route>
         {
           //Register Route
         }
@@ -39,6 +56,23 @@ function App() {
         <Route path="/add_Student" element={<AddStudent />}></Route>
         <Route path="/announcement" element={<Announcement />}></Route>
         <Route path="/comment" element={<Comment />}></Route>
+        <Route path="/printstud" element={<PrintStud />}></Route>
+        {
+          //Teacher Route
+        }
+        <Route path="/teacher" element={<Teacher />} />
+        <Route path="/fillmark" element={<Grade />} />
+        <Route path="/teacherAttendance" element={<TeacherAttendance />} />
+        <Route path="/manageAssessment" element={<CreateAssessment />} />
+        <Route path="/viewComplian" element={<Complian />} />
+        <Route path="/teacherDetial/:id" element={<AttendDetial />} />
+
+        {
+          //Family Route
+        }
+        <Route path="/family" element={<Family />} />
+        <Route path="/printFamily" element={<PrintFam />} />
+        <Route path="/familyAssessment" element={<AssessPage />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

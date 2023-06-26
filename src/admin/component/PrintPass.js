@@ -1,13 +1,33 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 import photo from "./images/Logo.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { useState } from "react";
 export default function PrintPass() {
   const componentRef = useRef(null);
+  const [name, setName] = useState();
+  const [ref_code, setRef_code] = useState();
+  const [password, setPassword] = useState();
+  const [id, setId] = useState();
   let history = useNavigate();
+
+  useEffect(() => {
+    const getStud = async () => {
+      setId(localStorage.getItem("id"));
+      setName(localStorage.getItem("name"));
+      setPassword(localStorage.getItem("password"));
+      setRef_code(localStorage.getItem("ref_code"));
+    };
+    getStud();
+  }, []);
   function afterAll() {
-    alert("print Success");
-    history("/dashboard");
+    toast("Registerd Success");
+    setId(localStorage.removeItem("id"));
+    setName(localStorage.removeItem("name"));
+    setPassword(localStorage.removeItem("password"));
+
+    history("/add_Teacher");
   }
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -16,6 +36,7 @@ export default function PrintPass() {
   });
   return (
     <>
+      <ToastContainer />
       <div className="container w-50 bg-secondary mt-5" ref={componentRef}>
         <div className="logo text-center">
           <img src={photo} alt="no image" className="logo-3 mx-auto my-2"></img>
@@ -29,23 +50,15 @@ export default function PrintPass() {
           <tbody>
             <tr>
               <td>Name</td>
-              <td>Galata Hinkosa</td>
+              <td>{name}</td>
             </tr>
             <tr>
               <td>User Id</td>
-              <td>UGR/17132/11</td>
+              <td>{id}</td>
             </tr>
             <tr>
               <td>Password</td>
-              <td>qw2fsfre</td>
-            </tr>
-            <tr>
-              <td>Referance code</td>
-              <td>uyereyuh</td>
-            </tr>
-            <tr>
-              <td>Name</td>
-              <td>Galata Hinkosa</td>
+              <td>{password}</td>
             </tr>
           </tbody>
         </table>

@@ -10,6 +10,9 @@
   scrollbar-color: white blue;
   padding-bottom: 10px;
 }
+.for-box {
+  box-shadow: 2px 2px 10px rgb(0, 0, 0, 0.2);
+}
 .mleft-for-dashbord-reg {
   padding-left: 260px;
   height: 100vh;
@@ -246,6 +249,20 @@
 img.avatar {
   width: 400px;
 }
+.imgcontainer3 {
+  text-align: center;
+}
+
+.numbers {
+  width: 45px;
+  height: 45px;
+}
+
+/* Avatar image */
+img.avatar3 {
+  width: 100%;
+  border-radius: 50%;
+}
 .form-body {
   width: 600px;
 }
@@ -293,4 +310,15 @@ img.avatar {
 .comment-box {
   height: 55vh;
   width: 30%;
+}
+.logo-f {
+  width: 40px;
+  height: 40px;
+}
+.family-bg {
+  background-color: #c7d3cb;
+}
+.transparent1 {
+  background-color: transparent !important;
+  border: none !important;
 }

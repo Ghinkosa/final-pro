@@ -7,11 +7,18 @@ import { useNavigate } from "react-router-dom";
 
 export default function Admin() {
   let history = useNavigate();
-  /*useEffect(()=>{
-    if(!(localStorage.getItem('user_id'))){
-      history('/');
+  const auth = () => {
+    if (localStorage.getItem("role") != "admin") {
+      history("/anAuthenticated");
     }
-  },[])*/
+  };
+
+  useEffect(() => {
+    const getPost = async () => {
+      auth();
+    };
+    getPost();
+  }, []);
   return (
     <div className="">
       <NavBar />

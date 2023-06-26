@@ -1,3 +1,4 @@
+import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -6,11 +7,41 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { FaUser } from "react-icons/fa";
-
+import { useNavigate } from "react-router-dom";
 export default function NavBar() {
+  let history = useNavigate();
+  const logout = (e) => {
+    let token = localStorage.getItem("token");
+    const formData = new FormData();
+    axios.defaults.withCredentials = true;
+    // CSRF COOKIE
+    axios
+      .get("http://localhost:8000" + "/sanctum/csrf-cookie")
+      .then((response) => {
+        //console.log(response);
+        // LOGIN
+        axios
+          .post("http://localhost:8000/" + "api/logout", formData, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then(
+            (response) => {
+              localStorage.removeItem("user_id");
+              localStorage.removeItem("token");
+              localStorage.removeItem("role");
+              history("/");
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      });
+  };
   return (
     <div className="">
-      <Navbar key="md" expand="md" className="py-2col bg-success">
+      <Navbar key="md" expand="md" className="py-2col for-box">
         <Container fluid>
           <Navbar.Brand href="#"></Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-md`} />
@@ -32,7 +63,7 @@ export default function NavBar() {
                     className="me-2"
                     aria-label="Search"
                   />
-                  <Button variant="outline-light">Search</Button>
+                  <Button variant="outline-success">Search</Button>
                 </Form>
                 <NavDropdown
                   title="Admin"
@@ -42,7 +73,7 @@ export default function NavBar() {
                   </NavDropdown.Item>
 
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action4">Logout</NavDropdown.Item>
+                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                   <NavDropdown.Item href="#action5">
                     Change password
                   </NavDropdown.Item>

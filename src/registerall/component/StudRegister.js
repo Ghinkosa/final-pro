@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { useNavigate } from "react-router-dom";
-
+import { json, useNavigate } from "react-router-dom";
+import axios from "axios";
 export default function StudRegister() {
+  const [allClasses, setAllClassess] = useState([]);
+  const [allSections, setAllSection] = useState([]);
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [mname, setMname] = useState("");
+  const [section_name, setSection_name] = useState("select section");
   const [date, setDate] = useState("");
   const [phone, setPhone] = useState(null);
   const [address, setAddress] = useState("");
@@ -16,12 +19,27 @@ export default function StudRegister() {
   const [session, setSession] = useState("Class");
   const [age, setAge] = useState("");
   const [errors, setErrors] = useState({});
+  const [emailError, setEmailError] = useState();
+  const [class_id, setClass_id] = useState();
+  const [class_name, setClass_name] = useState("select class");
   const allErrors = {};
+  const [section_id, setSection_id] = useState();
+  const [notSelectedClass, setNotSelectedClass] = useState(true);
+  const [notselected, setNotSelected] = useState(
+    "*class or Session Year is not selected"
+  );
   let history = useNavigate();
   const addUser = (e) => {
     e.preventDefault();
     setErrors(validateInput());
+    addStudent();
   };
+  //hundle image
+
+  function handleImage(e) {
+    console.log(e.target.files);
+    setPhoto(e.target.files[0]);
+  }
   function validateInput() {
     if (fname === "") {
       allErrors.fname = "Frist name is important";
@@ -58,6 +76,123 @@ export default function StudRegister() {
     }
     return allErrors;
   }
+
+  // REACT APP src/contexts/AppContext.js - login()
+  const addStudent = (event) => {
+    let token = localStorage.getItem("token");
+    let name = fname + " " + mname + " " + lname;
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("photo", photo);
+    formData.append("address", address);
+    formData.append("role", "student");
+    formData.append("status", "active");
+    formData.append("stud_class", class_id);
+    formData.append("stud_section", section_id);
+    formData.append("phone", phone);
+    axios.defaults.withCredentials = true;
+    // CSRF COOKIE
+    axios
+      .get("http://localhost:8000" + "/sanctum/csrf-cookie")
+      .then((response) => {
+        //console.log(response);
+        // LOGIN
+        axios
+          .post("http://localhost:8000/" + "api/studRegister", formData, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then(
+            (response) => {
+              let name = fname + " " + mname + " " + lname;
+              history("/printStud");
+              localStorage.setItem("id", response.data.info.User_id);
+              localStorage.setItem("password", response.data.info.password);
+              localStorage.setItem("ref_code", response.data.info.ref_code);
+              localStorage.setItem("name", name);
+            },
+            (error) => {
+              setEmailError("*This email is in use plaese change");
+            }
+          );
+      });
+  };
+  useEffect(() => {
+    const getClass = async () => {
+      allClass();
+    };
+    getClass();
+  }, []);
+
+  const allClass = (e) => {
+    let token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("class_id", class_id);
+    axios.defaults.withCredentials = true;
+    // CSRF COOKIE
+    axios
+      .get("http://localhost:8000" + "/sanctum/csrf-cookie")
+      .then((response) => {
+        //console.log(response);
+        // LOGIN
+        axios
+          .post("http://localhost:8000/" + "api/viewClass", formData, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then(
+            (response) => {
+              console.log(response);
+              setAllClassess(response.data);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      });
+  };
+
+  const allSection = (e) => {
+    let token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("class_id", class_id);
+    axios.defaults.withCredentials = true;
+    // CSRF COOKIE
+    axios
+      .get("http://localhost:8000" + "/sanctum/csrf-cookie")
+      .then((response) => {
+        //console.log(response);
+        // LOGIN
+        axios
+          .post("http://localhost:8000/" + "api/viewSection", formData, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then(
+            (response) => {
+              console.log(response);
+              setAllSection(response.data);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      });
+  };
+  const selectClass = (class_id, className) => {
+    setClass_id(class_id);
+    setClass_name(className);
+    setNotSelectedClass(false);
+    allSection();
+  };
+  const selectSection = (name, id) => {
+    setSection_name(name);
+    setSection_id(id);
+  };
   return (
     <div>
       <form className="bg-light mt-3 ps-4 mx-4 pb-2 rounded" onSubmit={addUser}>
@@ -120,6 +255,7 @@ export default function StudRegister() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}></input>
             {errors.email && <div className="text-danger">{errors.email}</div>}
+            {emailError && <div className="text-danger">{emailError}</div>}
           </div>
           <div className="mb-3 me-5">
             <label className="form-label">Phone</label>
@@ -177,49 +313,66 @@ export default function StudRegister() {
         </div>
         <div className="fs-5 mb-3">Other information</div>
         <div className="d-flex flex-wrap">
-          <div className="mb-3 me-5 col-3">
-            <label className="form-label"></label>
-            <select
-              className="w-100 form-select"
-              value={session}
-              placeholder=""
-              onChange={(e) => setSession(e.target.value)}>
-              <option>Class</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>10</option>
-              <option>11</option>
-              <option>12</option>
-            </select>
-            {errors.session && (
-              <div className="text-danger">{errors.session}</div>
-            )}
+          <div className="dropdown  w-25 me-5">
+            <label htmlFor="exampleFormControlInput1" className="form-label">
+              select class
+            </label>
+            <button
+              className="btn btn-light border border-primary w-100 dropdown-toggle"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+              {class_name}
+            </button>
+            <ul
+              className="dropdown-menu w-100"
+              aria-labelledby="dropdownMenuButton1">
+              {allClasses.map((classes) => (
+                <li key={classes.id}>
+                  <div
+                    className="dropdown_item border-bottom p-1 hover-drop-down"
+                    onClick={() => selectClass(classes.id, classes.className)}>
+                    {classes.className}
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="mb-3 me-5">
-            <label className="form-label">Age</label>
-            <input
-              type="number"
-              min="1"
-              className="form-control"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              placeholder="Your Age"></input>
-            {errors.age && <div className="text-danger">{errors.age}</div>}
+          <div className="dropdown w-25 me-5">
+            <label htmlFor="exampleFormControlInput1" className="form-label">
+              select section
+            </label>
+            <button
+              className="btn btn-light border border-primary w-100 dropdown-toggle"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              disabled={notSelectedClass}>
+              {section_name}
+            </button>
+            <ul
+              className="dropdown-menu w-100"
+              aria-labelledby="dropdownMenuButton1">
+              {allSections.map((section) => (
+                <li key={section.id}>
+                  <div
+                    className="dropdown_item border-bottom p-1 hover-drop-down"
+                    onClick={() =>
+                      selectSection(section.section_name, section.id)
+                    }>
+                    {section.section_name}
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="mb-3 me-5">
             <label className="form-label">Photo</label>
             <input
               type="file"
               className="form-control"
-              value={photo}
-              onChange={(e) => setPhoto(e.target.value)}
+              name="file"
+              onChange={handleImage}
               placeholder="photo"></input>
             {errors.photo && <div className="text-danger">{errors.photo}</div>}
           </div>

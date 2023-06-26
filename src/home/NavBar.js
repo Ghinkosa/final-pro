@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function ({ modelfunction }) {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light for-box">
         <div className="container-fluid">
           <Link className="navbar-brand ms-5 fw-bold" to="/">
             <img src={photo} alt="no image" className="logo-3"></img>

@@ -158,7 +158,7 @@ export const DashBoard = () => {
                 </div>
               </div>
 
-              <div className="ms-5 mt-5 stud-list">
+              <div className="ms-5 mt-5 ">
                 <div className="p-4 fs-3 text-dark d-flex ">
                   <div className="me-auto">Teacher List</div>
                   <button
@@ -167,8 +167,8 @@ export const DashBoard = () => {
                     Add Teacher
                   </button>
                 </div>
-                <div>
-                  <table className="table table-striped">
+                <div className="contianer me-5">
+                  <table className="table table-striped table-success">
                     <thead>
                       <tr>
                         <th scope="col">id</th>
@@ -180,104 +180,55 @@ export const DashBoard = () => {
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
-                    <tr>
-                      <td>3</td>
-                      <td>name</td>
-                      <td>post.user_id</td>
-                      <td>post.phone</td>
-                      <td>post.email</td>
-                      <td>
-                        <FaUserTie size={40} color="#ec5782" />
-                      </td>
-                      <td>
-                        <button className="btn btn-danger btn-sm">
-                          <FaTrash size={15} color="white" />
-                        </button>
-                        <button className="btn btn-primary btn-sm ms-2">
-                          <MdOutlineRestore size={17} color="white" />
-                        </button>
-                      </td>
-                    </tr>
 
-                    <tbody className="table table-striped">
-                      {currenPosts.map((post) =>
-                        form_id === post.id ? (
-                          <tr key={post.id}>
-                            <th>{post.id}</th>
-                            <td>
-                              <input
-                                type="text"
-                                name="name"
-                                value={post.name}
-                                className="no-border"
-                                onChange={(e) => hundleName(e, post.id)}
-                              />
-                            </td>
-                            <td>{post.user_id}</td>
-                            <td>
-                              <input
-                                type="text"
-                                name="phone"
-                                value={post.phone}
-                                className="no-border"
-                                onChange={(e) => hundleName(e, post.id)}
-                              />
-                            </td>
-                            <td>
-                              <input
-                                type="text"
-                                name="email"
-                                value={post.email}
-                                className="no-border"
-                                onChange={(e) => hundleName(e, post.id)}
-                              />
-                            </td>
-                            <td>
-                              <input type="file" className="no-border" />
-                            </td>
-                            <td>
-                              <FaTrash size={50} color="red" />
+                    <tbody className="">
+                      {currenPosts.map((post) => (
+                        <tr key={post.id}>
+                          <th>{post.id}</th>
+                          <td>
+                            <input
+                              type="text"
+                              name="name"
+                              value={post.name}
+                              className="form-control form-control form-control-sm transparent1"
+                              onChange={(e) => hundleName(e, post.id)}
+                            />
+                          </td>
+                          <td>{post.user_id}</td>
+                          <td>
+                            <input
+                              type="text"
+                              name="phone"
+                              value={post.phone}
+                              className="form-control form-control form-control-sm transparent1"
+                              onChange={(e) => hundleName(e, post.id)}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="text"
+                              name="email"
+                              value={post.email}
+                              className="form-control form-control form-control-sm transparent1"
+                              onChange={(e) => hundleName(e, post.id)}
+                            />
+                          </td>
+                          <td>
+                            <FaUserTie></FaUserTie>
+                          </td>
+                          <td className="">
+                            <div className="d-flex mt-1">
+                              <FaTrash color="red" size={20} />
                               <MdOutlineRestore
-                                size={60}
                                 color="#20D7D7"
+                                size={25}
                                 className="ms-3"
                                 onClick={() => makeUpdate(post.id)}
                               />
-                            </td>
-                          </tr>
-                        ) : (
-                          <tr
-                            key={post.id}
-                            onClick={() => {
-                              toForms(post.id);
-                            }}>
-                            <th scope="row">{post.id}</th>
-                            <td>
-                              <input
-                                type="text"
-                                className="no-border"
-                                value={post.name}
-                                onChange={(e) =>
-                                  setPost(e.target.value)
-                                }></input>
-                            </td>
-                            <td>{post.user_id}</td>
-                            <td>{post.phone}</td>
-                            <td>{post.email}</td>
-                            <td>
-                              <FaUserTie size={40} color="#ec5782" />
-                            </td>
-                            <td>
-                              <button className="btn btn-danger btn-sm">
-                                <FaTrash size={15} color="white" />
-                              </button>
-                              <button className="btn btn-primary btn-sm ms-2">
-                                <MdOutlineRestore size={17} color="#20D7D7" />
-                              </button>
-                            </td>
-                          </tr>
-                        )
-                      )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 export default function AddTeacher() {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -12,14 +12,16 @@ export default function AddTeacher() {
   const [phone, setPhone] = useState(null);
   const [address, setAddress] = useState("");
   const [sex, setSex] = useState("male");
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState("imagesUSER-00044.jpg");
   const [education, setEducation] = useState("");
   const [errors, setErrors] = useState({});
   const allErrors = {};
+  const [emailError, setEmailError] = useState();
   let history = useNavigate();
   const addUser = (e) => {
     e.preventDefault();
     setErrors(validateInput());
+    addNewTeacher();
     history("/print");
   };
   function validateInput() {
@@ -49,6 +51,46 @@ export default function AddTeacher() {
     }
     return allErrors;
   }
+  const addNewTeacher = (event) => {
+    let token = localStorage.getItem("token");
+    let name = fname + " " + mname + " " + lname;
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("photo", photo);
+    formData.append("address", address);
+    formData.append("role", "teacher");
+    formData.append("status", "active");
+    formData.append("stud_class", 1);
+    formData.append("phone", phone);
+    axios.defaults.withCredentials = true;
+    // CSRF COOKIE
+    axios
+      .get("http://localhost:8000" + "/sanctum/csrf-cookie")
+      .then((response) => {
+        //console.log(response);
+        // LOGIN
+        axios
+          .post("http://localhost:8000/" + "api/teacherRegister", formData, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then(
+            (response) => {
+              console.log(response.data);
+              localStorage.setItem("id", response.data.info.User_id);
+              localStorage.setItem("password", response.data.info.password);
+              localStorage.setItem("name", name);
+              history("/print");
+            },
+            (error) => {
+              console.log(response.data);
+              setEmailError("*This email is in use plaese change");
+            }
+          );
+      });
+  };
   return (
     <div>
       <form className="bg-light mt-3 ps-4 mx-4 pb-2" onSubmit={addUser}>
@@ -111,6 +153,7 @@ export default function AddTeacher() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}></input>
             {errors.email && <div className="text-danger">{errors.email}</div>}
+            {emailError && <div className="text-danger">{emailError}</div>}
           </div>
           <div className="mb-3 me-5">
             <label className="form-label">Phone</label>
@@ -180,13 +223,6 @@ export default function AddTeacher() {
               <option>MS</option>
               <option>PHD</option>
             </select>
-          </div>
-          <div className="mb-3 me-5">
-            <label className="form-label">Middle Name</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Middle Name"></input>
           </div>
           <div className="mb-3 me-5">
             <label className="form-label">Photo</label>
